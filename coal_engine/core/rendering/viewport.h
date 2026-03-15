@@ -6,7 +6,7 @@ namespace engine {
     class Viewport {
     public:
         Viewport(unsigned int width, unsigned int height);
-        ~Viewport() = default;
+        ~Viewport();
 
         void resize(unsigned int width, unsigned int height);
 

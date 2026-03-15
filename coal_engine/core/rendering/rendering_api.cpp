@@ -26,20 +26,37 @@ namespace engine {
 
     void glfw_error_callback(int error_code, const char* description) {
         EN_LOG_ERROR("[GLFW Error] ({}): {}.", error_code, description);
-        __debugbreak();
+        EN_DEBUG_BREAK();
     }
 
     void RenderingAPI::init() {
-        EN_ASSERT(glewInit() == GLEW_OK, "Glew initialization failed.");
+        if (glfwGetCurrentContext() == nullptr) {
+            EN_LOG_ERROR("No current OpenGL context found before initializing GLEW!");
+            EN_DEBUG_BREAK();
+        }
+
+#ifdef ENGINE_PLATFORM_LINUX
+        if (glfwGetPlatform() != GLFW_PLATFORM_X11) {
+            EN_LOG_WARNING("GLFW is not using X11 platform. GLEW initialization might fail (No GLX display).");
+        }
+#endif
+
+        glewExperimental = GL_TRUE;
+        GLenum err = glewInit();
+        if (err != GLEW_OK) {
+            EN_LOG_ERROR("Glew initialization failed: {}", (const char*)glewGetErrorString(err));
+            EN_DEBUG_BREAK();
+        }
 
         _current_api = new RenderingAPI();
 
+#ifndef ENGINE_PLATFORM_MACOS
         glEnable(GL_DEBUG_OUTPUT);
         glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
         glDebugMessageCallback((GLDEBUGPROC)opengl_message_callback, nullptr);
-        glfwSetErrorCallback(glfw_error_callback);
-
         glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DEBUG_SEVERITY_NOTIFICATION, 0, NULL, GL_FALSE);
+#endif
+        glfwSetErrorCallback(glfw_error_callback);
 
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

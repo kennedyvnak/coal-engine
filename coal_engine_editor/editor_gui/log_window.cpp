@@ -3,7 +3,7 @@
 #include <core/logging/logger.h>
 
 namespace engine {
-    void LogWindow::add_log(const Logger::Log& log) {
+    void LogWindow::add_log(const LogData& log) {
         _logs.push_back(Log{ engine::format("[{:%R:%OS}]: {}\n", log.time, log.message.c_str()), (char)log.level });
     }
 

@@ -22,7 +22,7 @@ namespace engine {
 	}
 
 #ifdef ENGINE_PLATFORM_WINDOWS
-#define COUT_TEXT(color, abbreviation) std::cout << dye::##color##(engine::format(#abbreviation "({:%T}): {}", log.time, log.message)) << std::endl
+#define COUT_TEXT(color, abbreviation) std::cout << dye::color(engine::format(#abbreviation "({:%T}): {}", log.time, log.message)) << std::endl
 #else
 #define COUT_TEXT(color, abbreviation) std::cout << engine::format(#abbreviation "({:%T}): {}", log.time, log.message) << std::endl
 #endif

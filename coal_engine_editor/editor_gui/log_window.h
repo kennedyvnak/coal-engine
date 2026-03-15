@@ -5,7 +5,7 @@
 #include <string>
 
 namespace engine {
-    struct Logger::Log;
+    struct LogData;
 
     class LogWindow {
     public:
@@ -17,7 +17,7 @@ namespace engine {
         LogWindow() = default;
         ~LogWindow() = default;
 
-        void add_log(const Logger::Log& log);
+        void add_log(const LogData& log);
         void clear();
         void render();
     private:

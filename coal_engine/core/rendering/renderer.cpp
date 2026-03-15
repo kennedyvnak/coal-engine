@@ -21,9 +21,9 @@ namespace engine {
     };
 
     struct RendererData {
-        static const unsigned int max_quads = 16384;
-        static const unsigned int max_vertices = max_quads * 4;
-        static const unsigned int max_indices = max_quads * 6;
+        static constexpr unsigned int max_quads = 16384;
+        static constexpr unsigned int max_vertices = max_quads * 4;
+        static constexpr unsigned int max_indices = max_quads * 6;
         static int max_texture_slots;
 
         Renderer::Statistics stats;

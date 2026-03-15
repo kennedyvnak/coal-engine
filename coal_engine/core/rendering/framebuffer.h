@@ -25,6 +25,6 @@ namespace engine {
         unsigned int _id;
         int _width;
         int _height;
-        Scope<Texture> _texture = nullptr;
+        Scope<Texture> _texture;
     };
 }

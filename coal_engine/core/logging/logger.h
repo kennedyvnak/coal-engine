@@ -15,13 +15,15 @@ namespace engine {
 	class LogWindow;
 #endif
 
+	struct LogData {
+		int level;
+		std::string message;
+		std::chrono::local_time<std::chrono::system_clock::duration> time;
+	};
+
 	class Logger {
 	public:
-		struct Log {
-			int level;
-			std::string message;
-			std::chrono::local_time<std::chrono::system_clock::duration> time;
-		};
+		using Log = LogData;
 
 		Logger(const Logger&) = delete;
 
@@ -35,7 +37,7 @@ namespace engine {
 
 #define LOG_FUNC(type, value)\
 		template<typename ... Args>\
-		void log_##type##(const std::string_view& format_str, Args&&... args) {\
+		void log_##type(const std::string_view& format_str, Args&&... args) {\
 			ilog({ value, engine::format(format_str, args...), get_current_time() });\
 		}\
 
@@ -55,7 +57,7 @@ namespace engine {
 
 		static Logger* _instance;
 
-		auto get_current_time() { return std::chrono::current_zone()->to_local(std::chrono::system_clock::now()); }
+		std::chrono::local_time<std::chrono::system_clock::duration> get_current_time() { return std::chrono::current_zone()->to_local(std::chrono::system_clock::now()); }
 
 		void ilog(const Log& log);
 	};

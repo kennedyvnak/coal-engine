@@ -100,7 +100,7 @@ namespace engine {
             int length;
             glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length);
             length -= 1; // Removes \n character at the end of string
-            char* message = (char*)_malloca(length * sizeof(char));
+            char* message = (char*)malloc(length * sizeof(char));
             glGetShaderInfoLog(id, length, &length, message);
             message[length - 1] = 0;
             EN_LOG_ERROR("Failed to compile {} shader. '{}'", (type == GL_VERTEX_SHADER ? "vertex" : "fragment"), message);

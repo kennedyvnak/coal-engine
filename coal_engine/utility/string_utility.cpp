@@ -1,3 +1,5 @@
+#define GLM_ENABLE_EXPERIMENTAL
+
 #include "enpch.h"
 #include "string_utility.h"
 #include <glm/glm.hpp>
